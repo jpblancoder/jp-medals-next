@@ -27,10 +27,17 @@ export default async function MedalsSortPage({ params }: PageProps) {
     console.error("Error fetching medals:", error);
   }
 
-  medals = medals.map((c: Country) => ({
-    ...c,
-    total: c.gold + c.silver + c.bronze,
-  }));
+  const flags = [...medals].map((c: Country) => c.code.toLowerCase()).sort();
+
+  medals = medals.map((c: Country) => {
+    const index = flags.indexOf(c.code.toLowerCase());
+    const offset = index > -1 ? index : undefined;
+    return {
+      ...c,
+      total: c.gold + c.silver + c.bronze,
+      flag: offset,
+    };
+  });
 
   medals.sort(getMedalsSortBy(sort));
 

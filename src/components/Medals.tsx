@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { Country } from "@/models/Country";
 import { sortMedalsBy } from "@/utils/medals";
 
@@ -65,13 +64,14 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
               <tr key={c.code}>
                 <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
                 <td className="border border-gray-300 px-4 py-2">
-                  {c.flag ? (
-                    <Image
-                      src="/flags.png"
-                      alt={`${c.code} flag`}
-                      width={27}
-                      height={17}
-                      style={{ objectPosition: `0 ${c.flag}px` }}
+                  {c.flag !== undefined ? (
+                    <div
+                      style={{
+                        backgroundImage: `url(/flags.png)`,
+                        backgroundPosition: `0 -${c.flag * 17}px`,
+                        width: "28px",
+                        height: "17px",
+                      }}
                     />
                   ) : null}
                 </td>
