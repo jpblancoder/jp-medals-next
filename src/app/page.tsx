@@ -4,26 +4,19 @@ export default function HomePage() {
   return (
     <main>
       <h1 className="text-2xl mb-4 uppercase">Medal Count Mini App</h1>
-      <ul className="list-disc pl-5">
+      <h2 className="text-xl mb-4">Sorty by ...</h2>
+      <ul className="pl-2">
         <li className="pb-2">
-          <Link href="/medals/total" className="underline">
-            Sorted by Total Medals
-          </Link>
+          <Link href="/medals/gold">🥇 Gold medals</Link>
         </li>
         <li className="pb-2">
-          <Link href="/medals/gold" className="underline">
-            Sorted by Gold Medals
-          </Link>
+          <Link href="/medals/silver">🥈 Silver medals</Link>
         </li>
         <li className="pb-2">
-          <Link href="/medals/silver" className="underline">
-            Sorted by Silver Medals
-          </Link>
+          <Link href="/medals/bronze">🥉 Bronze medals</Link>
         </li>
         <li className="pb-2">
-          <Link href="/medals/bronze" className="underline">
-            Sorted by Bronze Medals
-          </Link>
+          <Link href="/medals/total">🏅 Total medals</Link>
         </li>
       </ul>
     </main>
