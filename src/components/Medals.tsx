@@ -5,7 +5,7 @@ import { sortMedalsBy } from "@/utils/medals";
 
 export default function Medals({ data = [], sort = "" }: { data: Country[]; sort: string }) {
   const [order, setOrder] = useState(sort);
-  const [medals, setMedals] = useState<Country[]>([]);
+  const [medals, setMedals] = useState<Country[]>(() => sortMedalsBy(data, order, 10));
 
   useEffect(() => {
     setMedals(sortMedalsBy(data, order, 10));
@@ -20,38 +20,38 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
         <table className="border-collapse">
           <thead>
             <tr>
-              <th className="border-b-2 px-4 py-2 text-left">
-                <span className="sr-only">Index</span>
+              <th className="border-b-2 border-gray-400 py-2">
+                <span className="sr-only">Rank</span>
               </th>
-              <th className="border-b-2 px-4 py-2 text-left">
+              <th className="border-b-2 border-gray-400 px-2 py-2">
                 <span className="sr-only">Flag</span>
               </th>
-              <th className="border-b-2 px-4 py-2 text-left">
+              <th className="border-b-2 border-gray-400 px-2 py-2">
                 <span className="sr-only">Country</span>
               </th>
               <th
-                className={`border-b-2 px-4 py-2 text-center ${order === "gold" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 px-2 py-2 text-center ${order === "gold" ? "border-t-2" : ""}`}
               >
                 <button type="button" className="cursor-pointer" onClick={() => setOrder("gold")}>
                   🥇<span className="sr-only">Gold</span>
                 </button>
               </th>
               <th
-                className={`border-b-2 px-4 py-2 text-center ${order === "silver" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 px-2 py-2 text-center ${order === "silver" ? "border-t-2" : ""}`}
               >
                 <button type="button" className="cursor-pointer" onClick={() => setOrder("silver")}>
                   🥈<span className="sr-only">Silver</span>
                 </button>
               </th>
               <th
-                className={`border-b-2 px-4 py-2 text-center ${order === "bronze" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 px-2 py-2 text-center ${order === "bronze" ? "border-t-2" : ""}`}
               >
                 <button type="button" className="cursor-pointer" onClick={() => setOrder("bronze")}>
                   🥉<span className="sr-only">Bronze</span>
                 </button>
               </th>
               <th
-                className={`border-b-2 px-4 py-2 text-center uppercase ${order === "total" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 px-2 py-2 text-center uppercase ${order === "total" ? "border-t-2" : ""}`}
               >
                 <button
                   type="button"
@@ -66,8 +66,8 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
           <tbody>
             {medals.map((c, index) => (
               <tr key={c.code}>
-                <td className="border-b border-gray-300 px-4 py-2">{index + 1}</td>
-                <td className="border-b border-gray-300 px-4 py-2">
+                <td className="border-b border-gray-200 py-2 text-right">{index + 1}</td>
+                <td className="border-b border-gray-200 px-2 py-2">
                   {c.flag !== undefined ? (
                     <div
                       style={{
@@ -79,11 +79,14 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
                     />
                   ) : null}
                 </td>
-                <td className="border-b border-gray-300 px-4 py-2">{c.code}</td>
-                <td className="border-b border-gray-300 px-4 py-2 text-center">{c.gold}</td>
-                <td className="border-b border-gray-300 px-4 py-2 text-center">{c.silver}</td>
-                <td className="border-b border-gray-300 px-4 py-2 text-center">{c.bronze}</td>
-                <td className="border-b border-gray-300 px-4 py-2 text-center">{c.total}</td>
+
+                <td className="border-b border-gray-200 pr-12 py-2 text-left">{c.code}</td>
+                <td className="border-b border-gray-200 px-2 py-2 text-center">{c.gold}</td>
+                <td className="border-b border-gray-200 px-2 py-2 text-center">{c.silver}</td>
+                <td className="border-b border-gray-200 px-2 py-2 text-center">{c.bronze}</td>
+                <td className="border-b border-gray-200 px-2 py-2 text-center">
+                  <strong>{c.total}</strong>
+                </td>
               </tr>
             ))}
           </tbody>
