@@ -17,27 +17,26 @@ export default async function MedalsSortPage({ params }: PageProps) {
     sort = SORT_DEFAULT;
   }
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/medals.json`,
-  );
-  let data = await response.json();
-  if (!data) {
-    throw new Error("Failed to fetch medals data");
+  let medals: Country[] = [];
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/medals.json`,
+    );
+    medals = await response.json();
+  } catch (error) {
+    console.error("Error fetching medals:", error);
   }
 
-  data = data.map((c: Country) => ({
-    code: c.code,
-    gold: c.gold,
-    silver: c.silver,
-    bronze: c.bronze,
+  medals = medals.map((c: Country) => ({
+    ...c,
     total: c.gold + c.silver + c.bronze,
   }));
 
-  data.sort(getMedalsSortBy(sort));
+  medals.sort(getMedalsSortBy(sort));
 
   return (
     <main>
-      <Medals data={data} sort={sort} />
+      <Medals data={medals} sort={sort} />
     </main>
   );
 }

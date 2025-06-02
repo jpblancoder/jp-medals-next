@@ -1,7 +1,7 @@
 import type { Country } from "../models/Country";
 
-export function sortMedalsBy(data: Country[], sort: string, limit: number = 10): Country[] {
-  return [...data].sort(getMedalsSortBy(sort)).slice(0, limit);
+export function sortMedalsBy(countries: Country[], sort: string, limit: number = 10): Country[] {
+  return [...countries].sort(getMedalsSortBy(sort)).slice(0, limit);
 }
 
 export function getMedalsSortBy(sort: string) {
