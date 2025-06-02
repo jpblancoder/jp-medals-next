@@ -1,5 +1,6 @@
 import { byBronzeMedals, byGoldMedals, bySilverMedals, byTotalMedals } from "@/utils/medals";
 import Medals from "../../../components/Medals";
+import { Country } from "@/models/Country";
 
 interface PageProps {
   params: {
@@ -24,14 +25,22 @@ export default async function MedalsSortPage({ params }: PageProps) {
     throw new Error("Failed to fetch medals data");
   }
 
+  data = data.map((c: Country) => ({
+    code: c.code,
+    gold: c.gold,
+    silver: c.silver,
+    bronze: c.bronze,
+    total: c.gold + c.silver + c.bronze,
+  }));
+
   if (sort === "total") {
-    data = data.sort(byTotalMedals);
+    data.sort(byTotalMedals);
   } else if (sort === "gold") {
-    data = data.sort(byGoldMedals);
+    data.sort(byGoldMedals);
   } else if (sort === "silver") {
-    data = data.sort(bySilverMedals);
+    data.sort(bySilverMedals);
   } else if (sort === "bronze") {
-    data = data.sort(byBronzeMedals);
+    data.sort(byBronzeMedals);
   }
 
   return (
