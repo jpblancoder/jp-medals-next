@@ -1,18 +1,15 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Country } from "@/models/Country";
-import { getMedalsSortBy } from "@/utils/medals";
+import { sortMedalsBy } from "@/utils/medals";
 
 export default function Medals({ data, sort }: { data: Country[]; sort: string }) {
   const [order, setOrder] = useState(sort);
-  const [medals, setMedals] = useState(data);
+  const [medals, setMedals] = useState<Country[]>([]);
 
-  const sortMedals = useCallback((sortType: string) => {
-    setMedals((state) => {
-      return [...state].sort(getMedalsSortBy(sortType));
-    });
-    setOrder(sortType);
-  }, []);
+  useEffect(() => {
+    setMedals(sortMedalsBy(data, order, 10));
+  }, [data, order]);
 
   return (
     <div>
@@ -32,30 +29,30 @@ export default function Medals({ data, sort }: { data: Country[]; sort: string }
             <th
               className={`border border-gray-300 px-4 py-2 text-center ${order === "gold" ? "sort-active" : ""}`}
             >
-              <a href="#gold" onClick={() => sortMedals("gold")}>
+              <button type="button" className="cursor-pointer" onClick={() => setOrder("gold")}>
                 🥇<span className="sr-only">Gold</span>
-              </a>
+              </button>
             </th>
             <th
               className={`border border-gray-300 px-4 py-2 text-center ${order === "silver" ? "sort-active" : ""}`}
             >
-              <a href="#silver" onClick={() => sortMedals("silver")}>
+              <button type="button" className="cursor-pointer" onClick={() => setOrder("silver")}>
                 🥈<span className="sr-only">Silver</span>
-              </a>
+              </button>
             </th>
             <th
               className={`border border-gray-300 px-4 py-2 text-center ${order === "bronze" ? "sort-active" : ""}`}
             >
-              <a href="#bronze" onClick={() => sortMedals("bronze")}>
+              <button type="button" className="cursor-pointer" onClick={() => setOrder("bronze")}>
                 🥉<span className="sr-only">Bronze</span>
-              </a>
+              </button>
             </th>
             <th
               className={`border border-gray-300 px-4 py-2 text-center uppercase ${order === "total" ? "sort-active" : ""}`}
             >
-              <a href="#total" onClick={() => sortMedals("total")}>
+              <button type="button" className="cursor-pointer" onClick={() => setOrder("total")}>
                 Total
-              </a>
+              </button>
             </th>
           </tr>
         </thead>
