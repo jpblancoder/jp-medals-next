@@ -12,7 +12,7 @@ const SORT_PARAMS = ["total", "gold", "silver", "bronze"];
 const SORT_DEFAULT = "gold";
 
 export default async function MedalsSortPage({ params }: PageProps) {
-  let { sort } = params;
+  let { sort } = await params;
   if (!SORT_PARAMS.includes(sort)) {
     sort = SORT_DEFAULT;
   }
