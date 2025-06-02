@@ -4,4 +4,5 @@ export type Country = {
   silver: number;
   bronze: number;
   total?: number;
+  flag?: number;
 };
