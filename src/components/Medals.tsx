@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Country } from "@/models/Country";
 import { sortMedalsBy } from "@/utils/medals";
+import Link from "next/link";
 
 export default function Medals({ data = [], sort = "" }: { data: Country[]; sort: string }) {
   const [order, setOrder] = useState(sort);
@@ -20,6 +21,18 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
       router.push(nextRoute);
     }
   }, [router, pathname, order]);
+
+  const sortBy = useCallback((type: string) => {
+    return (e: React.MouseEvent) => {
+      e.preventDefault();
+      setOrder(type);
+    };
+  }, []);
+
+  const sortByGold = useCallback(() => sortBy("gold"), [sortBy]);
+  const sortBySilver = useCallback(() => sortBy("silver"), [sortBy]);
+  const sortByBronze = useCallback(() => sortBy("bronze"), [sortBy]);
+  const sortByTotal = useCallback(() => sortBy("total"), [sortBy]);
 
   return (
     <div>
@@ -40,36 +53,36 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
                 <span className="sr-only">Country</span>
               </th>
               <th
-                className={`border-b-2 border-gray-400 py-2 text-center ${order === "gold" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 text-2xl text-center ${order === "gold" ? "border-t-2" : ""}`}
               >
-                <button type="button" className="cursor-pointer" onClick={() => setOrder("gold")}>
+                <Link href="/medals/gold" className="cursor-pointer" onClick={sortByGold}>
                   🥇<span className="sr-only">Gold</span>
-                </button>
+                </Link>
               </th>
               <th
-                className={`border-b-2 border-gray-400 py-2 text-center ${order === "silver" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 text-2xl text-center ${order === "silver" ? "border-t-2" : ""}`}
               >
-                <button type="button" className="cursor-pointer" onClick={() => setOrder("silver")}>
+                <Link href="/medals/silver" className="cursor-pointer" onClick={sortBySilver}>
                   🥈<span className="sr-only">Silver</span>
-                </button>
+                </Link>
               </th>
               <th
-                className={`border-b-2 border-gray-400 py-2 text-center ${order === "bronze" ? "border-t-2" : ""}`}
+                className={`border-b-2 border-gray-400 text-2xl text-center ${order === "bronze" ? "border-t-2" : ""}`}
               >
-                <button type="button" className="cursor-pointer" onClick={() => setOrder("bronze")}>
+                <Link href="/medals/bronze" className="cursor-pointer" onClick={sortByBronze}>
                   🥉<span className="sr-only">Bronze</span>
-                </button>
+                </Link>
               </th>
               <th
                 className={`border-b-2 border-gray-400 py-2 text-center uppercase ${order === "total" ? "border-t-2" : ""}`}
               >
-                <button
-                  type="button"
+                <Link
+                  href="/medals/total"
                   className="cursor-pointer uppercase"
-                  onClick={() => setOrder("total")}
+                  onClick={sortByTotal}
                 >
                   Total
-                </button>
+                </Link>
               </th>
             </tr>
           </thead>
