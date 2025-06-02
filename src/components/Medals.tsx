@@ -17,7 +17,7 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
       {medals.length === 0 ? (
         <p className="mb-4">Failed to load medal count data. Please try again later.</p>
       ) : (
-        <table className="border-collapse">
+        <table className="border-collapse w-100">
           <thead>
             <tr>
               <th className="border-b-2 border-gray-400 py-2">
@@ -79,7 +79,6 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
                     />
                   ) : null}
                 </td>
-
                 <td className="border-b border-gray-200 pr-12 py-2 text-left">{c.code}</td>
                 <td className="border-b border-gray-200 px-2 py-2 text-center">{c.gold}</td>
                 <td className="border-b border-gray-200 px-2 py-2 text-center">{c.silver}</td>
