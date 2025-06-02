@@ -1,5 +1,20 @@
 import type { Country } from "../models/Country";
 
+export function getMedalsSortBy(sort: string) {
+  switch (sort) {
+    case "total":
+      return byTotalMedals;
+    case "gold":
+      return byGoldMedals;
+    case "silver":
+      return bySilverMedals;
+    case "bronze":
+      return byBronzeMedals;
+    default:
+      return byGoldMedals; // Default sort
+  }
+}
+
 export function byTotalMedals(a: Country, b: Country) {
   const totalA = a.gold + a.silver + a.bronze;
   const totalB = b.gold + b.silver + b.bronze;

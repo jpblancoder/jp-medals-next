@@ -1,4 +1,4 @@
-import { byBronzeMedals, byGoldMedals, bySilverMedals, byTotalMedals } from "@/utils/medals";
+import { getMedalsSortBy } from "@/utils/medals";
 import Medals from "../../../components/Medals";
 import { Country } from "@/models/Country";
 
@@ -33,15 +33,7 @@ export default async function MedalsSortPage({ params }: PageProps) {
     total: c.gold + c.silver + c.bronze,
   }));
 
-  if (sort === "total") {
-    data.sort(byTotalMedals);
-  } else if (sort === "gold") {
-    data.sort(byGoldMedals);
-  } else if (sort === "silver") {
-    data.sort(bySilverMedals);
-  } else if (sort === "bronze") {
-    data.sort(byBronzeMedals);
-  }
+  data.sort(getMedalsSortBy(sort));
 
   return (
     <main>

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <main>
-      <h1 className="text-2xl font-bold mb-4 uppercase">Medal Count Mini App</h1>
+      <h1 className="text-2xl mb-4 uppercase">Medal Count Mini App</h1>
       <ul className="list-disc pl-5">
         <li className="pb-2">
           <Link href="/medals/total" className="underline">
