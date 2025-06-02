@@ -1,15 +1,25 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { Country } from "@/models/Country";
 import { sortMedalsBy } from "@/utils/medals";
 
 export default function Medals({ data = [], sort = "" }: { data: Country[]; sort: string }) {
   const [order, setOrder] = useState(sort);
   const [medals, setMedals] = useState<Country[]>(() => sortMedalsBy(data, order, 10));
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setMedals(sortMedalsBy(data, order, 10));
   }, [data, order]);
+
+  useEffect(() => {
+    const nextRoute = `/medals/${order}`;
+    if (pathname !== nextRoute) {
+      router.push(nextRoute);
+    }
+  }, [router, pathname, order]);
 
   return (
     <div>
