@@ -67,13 +67,14 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
             {medals.map((c, index) => (
               <tr key={c.code}>
                 <td className="border-b border-gray-200 py-2 text-right">{index + 1}</td>
-                <td className="border-b border-gray-200 px-2 py-2">
+                <td className="border-b border-gray-200 px-2 py-2 text-center">
                   {c.flag !== undefined ? (
                     <div
                       style={{
                         backgroundImage: `url(/flags.png)`,
-                        backgroundPosition: `0 -${c.flag * 17}px`,
-                        width: "28px",
+                        backgroundPosition: `${c.code === "SUI" ? "-4px" : "0"} -${c.flag * 17}px`,
+                        marginLeft: c.code === "SUI" ? "4px" : "0",
+                        width: c.code === "SUI" ? "20px" : "28px",
                         height: "17px",
                       }}
                     />
