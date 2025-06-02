@@ -1,4 +1,5 @@
-// import { Suspense } from "react";
+import { byBronzeMedals, byGoldMedals, bySilverMedals, byTotalMedals } from "@/utils/medals";
+import Medals from "../../../components/Medals";
 
 interface PageProps {
   params: {
@@ -9,18 +10,33 @@ interface PageProps {
 const SORT_PARAMS = ["total", "gold", "silver", "bronze"];
 const SORT_DEFAULT = "gold";
 
-export default function MedalsSortPage({ params }: PageProps) {
+export default async function MedalsSortPage({ params }: PageProps) {
   let { sort } = params;
   if (!SORT_PARAMS.includes(sort)) {
     sort = SORT_DEFAULT;
   }
 
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/medals.json`,
+  );
+  let data = await response.json();
+  if (!data) {
+    throw new Error("Failed to fetch medals data");
+  }
+
+  if (sort === "total") {
+    data = data.sort(byTotalMedals);
+  } else if (sort === "gold") {
+    data = data.sort(byGoldMedals);
+  } else if (sort === "silver") {
+    data = data.sort(bySilverMedals);
+  } else if (sort === "bronze") {
+    data = data.sort(byBronzeMedals);
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h1>Medals - Sorted by {sort}</h1>
-        {/* <Suspense fallback={<div>Loading products...</div>}>Sort</Suspense> */}
-      </main>
-    </div>
+    <main>
+      <Medals data={data} sort={sort} />
+    </main>
   );
 }

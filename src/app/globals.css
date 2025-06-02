@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 :root {
+  font-family: sans-serif;
+  line-height: normal;
+  font-weight: normal;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   --background: #ffffff;
   --foreground: #171717;
+
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
 }
 
 @theme inline {
