@@ -4,6 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Country } from "@/models/Country";
 import { sortMedalsBy } from "@/utils/medals";
 import Link from "next/link";
+import { CountryFlag } from "@/components/CountryFlag";
 
 export default function Medals({ data = [], sort = "" }: { data: Country[]; sort: string }) {
   const [order, setOrder] = useState(sort);
@@ -91,17 +92,7 @@ export default function Medals({ data = [], sort = "" }: { data: Country[]; sort
               <tr key={c.code}>
                 <td className="border-b border-gray-200 pr-2 py-2 text-right">{index + 1}</td>
                 <td className="border-b border-gray-200 py-2">
-                  {c.flag !== undefined ? (
-                    <div
-                      style={{
-                        backgroundImage: `url(/flags.png)`,
-                        backgroundPosition: `${c.code === "SUI" ? "-4px" : "0"} -${c.flag * 17}px`,
-                        marginLeft: c.code === "SUI" ? "4px" : "0",
-                        width: c.code === "SUI" ? "20px" : "28px",
-                        height: "17px",
-                      }}
-                    />
-                  ) : null}
+                  <CountryFlag code={c.code} flag={c.flag} />
                 </td>
                 <td className="border-b border-gray-200 pr-10 py-2 text-left">{c.code}</td>
                 <td className="border-b border-gray-200 px-2 py-2 text-center">{c.gold}</td>
